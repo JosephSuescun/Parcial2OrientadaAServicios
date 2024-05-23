@@ -1,0 +1,87 @@
+<app-header />
+<div class="px-4 py-4">
+  <div class="container-fluid">
+    <h1><i class="fa-solid fa-clipboard-list" style="color: #000000;"></i> PRODUCTS</h1><br>
+    <table class="container-fluid">
+      <tr>
+        <td><button (click)="openModalCreate()" class="btn btn-success"
+            style="background-color: #137bad !important; border: none;  transition: background-color 0.5s ease-in-out"><i
+              class="fa-solid fa-plus" style="color: #ffffff;"></i> Create new product</button>
+        </td>
+        <td style="text-align: left;">
+          <div class="input-group rounded float-end" style="width: 30%; text-align: left;">
+            <input type="search" class="form-control rounded" placeholder="Search product" #txtSearch
+              (keyup)="onSearchProducto( txtSearch.value )" aria-label="Search" aria-describedby="search-addon" />
+            <span class="input-group-text border-0" style="background-color: #137bad !important; color: white;" id="search-addon">
+              <i class="fas fa-search"></i>
+            </span>
+          </div>
+        </td>
+      </tr>
+    </table><br>
+    <table datatable class="table table-striped" id="example">
+      <thead class="bg-light">
+        <tr>
+          <th>#</th>
+          <th>Images</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+     
+        <tr *ngIf="(elementos | filtro:page:search).length == 0">
+        <td colspan="6" align="center">
+          <p>EMPTY</p>
+        </td>
+        </tr>
+        <tr *ngFor="let p of elementos | filtro:page:search">
+
+          <td>{{ elementos.indexOf(p) + 1 }}</td>
+          <td><img [ngSrc]="p.images[0]" width="50" height="50" class="rounded-circle" /></td>
+          <td titulo>{{ p.title }}</td>
+          <td descripcion>{{ p.description }}</td>
+          <td precio>${{ p.price }}</td>
+          <td accion>
+            <button (click)="openModalView(p.id)" class="btn btn-primary"><i class="fa-solid fa-eye"
+                style="color: #ffffff;"></i></button>
+            <button (click)="openModalInput(p.id)" class="btn btn-warning m-1"><i class="fa-solid fa-pen-to-square"
+                style="color: #ffffff;"></i></button>
+            <button (click)="deleteItem(p.id)" class="btn btn-danger"><i class="fa-solid fa-trash"
+                style="color: #ffffff;"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="container-fluid">
+      <tr>
+        <td align="center"> <button class="btn btn-info" (click)="prevPage()">
+          back
+        </button>
+        &nbsp;
+        <button class="btn btn-info" (click)="nextPage()" [disabled]="(elementos | filtro:page:search).length === 0" >
+          next
+        </button></td>
+      </tr>
+
+    </table>
+    </div>
+  </div>
+
+<div *ngIf="modalView == true">
+  <app-lista [id]="itemId" />
+</div>
+
+<div *ngIf="modalInput == true">
+  <app-actualizar [id]="itemId" />
+</div>
+
+<div *ngIf="modalCreate == true">
+  <app-crear />
+</div>
+
+<script>
+  new DataTable('#example');
+</script>

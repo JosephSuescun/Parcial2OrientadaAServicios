@@ -1,0 +1,18 @@
+<div id="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #ee7724 !important;">
+        <h5 class="modal-title">Eliminar producto</h5>
+        <button type="button" (click)="closeModal()" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="color: black;">
+        <p>¿Estas seguro que quieres eliminar el producto: {{elemento.id}}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button"  (click)="deleteItem()" class="btn btn-danger" data-bs-dismiss="modal">Si, eliminar</button>
+        <button type="button"  (click)="closeModal()" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
